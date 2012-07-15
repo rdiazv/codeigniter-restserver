@@ -256,6 +256,10 @@ abstract class REST_Controller extends CI_Controller
 			$object_called = $matches[1];
 		}
 
+		if ($object_called === 'index') {
+			$object_called = '';
+		}
+
 		$controller_method = $object_called.'_'.$this->request->method;
 
 		// Do we want to log this method (if allowed by config)?
