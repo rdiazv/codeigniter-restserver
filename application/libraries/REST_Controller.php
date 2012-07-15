@@ -15,6 +15,8 @@
  */
 abstract class REST_Controller extends CI_Controller
 {
+	protected $nested = array();
+
 	/**
 	 * This defines the rest format.
 	 *
@@ -250,6 +252,11 @@ abstract class REST_Controller extends CI_Controller
 	 */
 	public function _remap($object_called, $arguments)
 	{
+		if ($object_called !== 'index' && ! in_array($object_called, $this->nested)) {
+			array_unshift($arguments, $object_called);
+			$object_called = '';
+		}
+
 		if (! in_array($this->request->method, $this->allowed_http_methods)) {
 			$this->response(array('status' => false, 'error' => 'Not allowed method'), 403);
 		}
